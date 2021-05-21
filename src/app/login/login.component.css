@@ -15,4 +15,8 @@
   margin-bottom: 10px;
 }
 
+input.ng-invalid.ng-touched {
+  border: 2px solid #f00;
+}
+
 
