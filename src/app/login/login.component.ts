@@ -17,4 +17,8 @@ export class LoginComponent implements OnInit {
   login(loginForm: NgForm, event) {
     console.log(loginForm.value, loginForm.valid, event);
   }
+
+  emailChanged(value) {
+    console.log(value);
+  }
 }
