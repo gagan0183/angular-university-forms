@@ -8,6 +8,10 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  value = {
+    email: 'test@test.com',
+    password: 'admin123'
+  }
   constructor() {
   }
 
@@ -15,7 +19,7 @@ export class LoginComponent implements OnInit {
   }
 
   login(loginForm: NgForm, event) {
-    console.log(loginForm.value, loginForm.valid, event);
+    console.log(this.value);
   }
 
   emailChanged(value) {

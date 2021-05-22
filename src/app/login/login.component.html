@@ -5,8 +5,9 @@
     <form class="login-form data-form" #loginForm="ngForm" (ngSubmit)="login(loginForm, $event)">
       <mat-form-field>
 
-        <input matInput ngModel type="email" name="email"
+        <input matInput type="email" name="email"
                placeholder="Email" required minlength="3"
+               [(ngModel)]="value.email"
                [ngModelOptions]="{ standalone: true}"
                (ngModelChange)="emailChanged($event)"
                email #email="ngModel">
@@ -18,7 +19,7 @@
 
       <mat-form-field>
 
-        <input matInput ngModel type="password" name="password" placeholder="Password"
+        <input matInput [(ngModel)]="value.password" type="password" name="password" placeholder="Password"
                    #password="ngModel" required>
         <mat-error *ngIf="password.errors?.required">The password is mandatory</mat-error>
 
