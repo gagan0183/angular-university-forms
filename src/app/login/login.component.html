@@ -7,7 +7,7 @@
 
         <input matInput ngModel type="email" name="email"
                placeholder="Email" required minlength="3"
-               [ngModelOptions]="{ name: 'Email'}"
+               [ngModelOptions]="{ standalone: true}"
                (ngModelChange)="emailChanged($event)"
                email #email="ngModel">
         <mat-error *ngIf="email.errors?.required">The email is mandatory</mat-error>
