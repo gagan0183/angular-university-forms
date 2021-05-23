@@ -7,7 +7,7 @@
 
         <input matInput type="email" name="email"
                placeholder="Email" required minlength="3"
-               [(ngModel)]="value.email"
+               ngModel
                (ngModelChange)="emailChanged($event)"
                email #email="ngModel">
         <mat-error *ngIf="email.errors?.required">The email is mandatory</mat-error>
@@ -18,11 +18,13 @@
 
       <mat-form-field>
 
-        <input matInput [(ngModel)]="value.password" type="password" name="password" placeholder="Password"
+        <input matInput ngModel  type="password" name="password" placeholder="Password"
                    #password="ngModel" #password="ngModel" required minlength="5" passwordStrength>
         <mat-error *ngIf="password.errors?.required">The password is mandatory</mat-error>
-        <mat-error *ngIf="password.errors?.minlength">The password have less than minimum length</mat-error>
-        <mat-error *ngIf="password.errors?.passwordStrength">Password does not meet minimum complexity</mat-error>
+        <ng-container *ngIf="password.errors | onlyOneError:['minlength', 'passwordStrength'] as error">
+          <mat-error *ngIf="error.minlength">The password have less than minimum length</mat-error>
+          <mat-error *ngIf="error.passwordStrength">Password does not meet minimum complexity</mat-error>
+        </ng-container>
 
 
       </mat-form-field>
@@ -30,9 +32,6 @@
       <button mat-raised-button color="primary" type="submit" [disabled]="!loginForm.valid">
         Login
       </button>
-
-      {{password.errors | json}}
-
     </form>
 
   </mat-card-content>
