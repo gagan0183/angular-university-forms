@@ -21,4 +21,12 @@ export class LoginReactiveComponent implements OnInit {
   }
   ngOnInit() {
   }
+
+  get email() {
+    return this.form.controls['email'];
+  }
+
+  get password() {
+    return this.form.controls['password'];
+  }
 }

@@ -8,13 +8,20 @@
 
         <input matInput type="email" name="email"
                placeholder="Email" formControlName="email">
+        <mat-error *ngIf="email.errors?.required">The email is mandatory</mat-error>
+        <mat-error *ngIf="email.errors?.minlength">Email entered actual length is {{email.errors?.minlength.actualLength}} it should be {{email.errors?.minlength.requiredLength}}</mat-error>
+        <mat-error *ngIf="email.errors?.email">Invalid email</mat-error>
 
       </mat-form-field>
 
       <mat-form-field>
 
         <input matInput type="password" placeholder="Password" formControlName="password">
-
+        <mat-error *ngIf="password.errors?.required">The password is mandatory</mat-error>
+        <ng-container *ngIf="password.errors | onlyOneError:['minlength', 'passwordStrength'] as error">
+          <mat-error *ngIf="error.minlength">The password have less than minimum length</mat-error>
+          <mat-error *ngIf="error.passwordStrength">Password does not meet minimum complexity</mat-error>
+        </ng-container>
       </mat-form-field>
 
       <button mat-raised-button color="primary">
