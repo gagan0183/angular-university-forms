@@ -9,6 +9,13 @@
         </mat-error>
     </mat-form-field>
     <mat-form-field>
+        <mat-select placeholder="Select Category" formControlName="category">
+            <ng-container *ngFor="let category of (courseCategories$ | async)">
+                <mat-option [value]="category.code">{{category.description}}</mat-option>
+            </ng-container>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field>
         <input matInput [matDatepicker]="releaseDatePicker" placeholder="Release date" formControlName="releasedAt">
         <mat-datepicker-toggle matSuffix [for]="releaseDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #releaseDatePicker></mat-datepicker>
