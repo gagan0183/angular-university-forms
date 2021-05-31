@@ -11,6 +11,6 @@ import {noop, of} from 'rxjs';
   styleUrls: ["file-upload.component.scss"]
 })
 export class FileUploadComponent {
-
-
+  @Input()
+  requiredFileType: string;
 }
