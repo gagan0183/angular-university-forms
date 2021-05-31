@@ -27,7 +27,7 @@ export class CreateCourseStep2Component implements OnInit {
       if (value.courseType === "free" && priceControl.enabled) {
         priceControl.disable({ emitEvent: false });
       } else if (value.courseType === "premium" && priceControl.disabled) {
-        priceControl.enable()
+        priceControl.enable({ emitEvent: false })
       }
     })
   }
