@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import { Observable } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { CoursesService } from '../../services/courses.service';
 import { courseTitleValidator } from '../../validators/course-title.validator';
 
@@ -34,6 +35,12 @@ export class CreateCourseStep1Component implements OnInit {
 
   ngOnInit() {
     this.courseCategories$ = this.courseService.findCourseCategories();
+    if (localStorage.getItem("STEP_1")) {
+      this.form.patchValue(JSON.parse(localStorage.getItem("STEP_1")));
+    }
+    this.form.valueChanges
+    .pipe(filter(() => this.form.valid))
+    .subscribe(value => localStorage.setItem("STEP_1", JSON.stringify(value)));
   }
 
   get courseTitle() {
