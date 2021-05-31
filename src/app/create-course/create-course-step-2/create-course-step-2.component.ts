@@ -14,7 +14,9 @@ export class CreateCourseStep2Component implements OnInit {
       Validators.min(1),
       Validators.max(9999),
       Validators.pattern('[0-9]+')
-    ]]
+    ]],
+    promoStartAt: [null, Validators.required],
+    promoEndAt: [null, Validators.required]
   });
 
   constructor(private fb: FormBuilder) {}
