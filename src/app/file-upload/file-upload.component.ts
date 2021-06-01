@@ -4,11 +4,17 @@ import {catchError, finalize} from 'rxjs/operators';
 import {AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, Validator} from '@angular/forms';
 import {noop, of} from 'rxjs';
 
-
 @Component({
   selector: 'file-upload',
   templateUrl: "file-upload.component.html",
-  styleUrls: ["file-upload.component.scss"]
+  styleUrls: ["file-upload.component.scss"],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      multi: true,
+      useExisting: FileUploadComponent,
+    }
+  ]
 })
 export class FileUploadComponent implements ControlValueAccessor {
   @Input()

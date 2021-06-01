@@ -16,12 +16,12 @@ export class CreateCourseStep2Component implements OnInit {
       Validators.max(9999),
       Validators.pattern('[0-9]+')
     ]],
+    thumbnail: [null],
     promoStartAt: [null, Validators.required],
     promoEndAt: [null, Validators.required]
   },
   {
     validators: [createPromoRangeValidator()],
-    updateOn: "blur"
   });
 
   constructor(private fb: FormBuilder) {}
