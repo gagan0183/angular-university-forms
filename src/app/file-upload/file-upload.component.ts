@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {HttpClient, HttpEventType} from '@angular/common/http';
 import {catchError, finalize} from 'rxjs/operators';
-import {AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, Validator} from '@angular/forms';
+import {AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator} from '@angular/forms';
 import {noop, of} from 'rxjs';
 
 @Component({
@@ -13,20 +13,42 @@ import {noop, of} from 'rxjs';
       provide: NG_VALUE_ACCESSOR,
       multi: true,
       useExisting: FileUploadComponent,
+    },
+    {
+      provide: NG_VALIDATORS,
+      multi: true,
+      useExisting: FileUploadComponent,
     }
   ]
 })
-export class FileUploadComponent implements ControlValueAccessor {
+export class FileUploadComponent implements ControlValueAccessor, Validator {
   @Input()
   requiredFileType: string;
   fileName: string = '';
   fileUploadError = false;
+  fileUploadSuccess = false;
   disabled: boolean = false;
   uploadProgress: number;
   onTouched: () => {};
+  onValidatorChange = () => {};
   onChange: (fileName: string) => {};
 
   constructor(private http: HttpClient) {}
+  validate(control: AbstractControl): ValidationErrors {
+    if (this.fileUploadSuccess) {
+      return null;
+    }
+    const errors: any = {
+      requiredFileType: this.requiredFileType,
+    };
+    if(this.fileUploadError) {
+      errors.uploadFailed = true;
+    }
+    return errors;
+  }
+  registerOnValidatorChange?(onValidatorChange: () => void): void {
+    this.onValidatorChange = onValidatorChange;
+  }
 
   writeValue(value: any): void {
     this.fileName = value; 
@@ -62,7 +84,9 @@ export class FileUploadComponent implements ControlValueAccessor {
         if (event.type === HttpEventType.UploadProgress) {
           this.uploadProgress = Math.round(100 * (event.loaded / event.total));
         } else if (event.type === HttpEventType.Response) {
+          this.fileUploadSuccess = true;
           this.onChange(this.fileName);
+          this.onValidatorChange();
         }
       });
     }
